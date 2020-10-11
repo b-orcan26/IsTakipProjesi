@@ -4,8 +4,8 @@
 
 Kullanılan Teknolojiler : .Net Core MVC , SignaIR , Dapper , AutoMapper , FluentValidation , JQuery , AJAX , Font Awesome , MomentJS , Generic Repository Pattern
 
-![s1](https://hizliresim.com/07l6VU.png)
-![s2](https://hizliresim.com/Oogesq.png)
-![s3](https://hizliresim.com/VHgO1P.png)
-![s4](https://hizliresim.com/S0Dg8H.png)
-![s5](https://hizliresim.com/lmcXHa.png)
+![s1](https://i.resimyukle.xyz/44fHOU.png)
+![s2](https://i.resimyukle.xyz/HeBKQL.png)
+![s3](https://i.resimyukle.xyz/OyeV3z.png)
+![s4](https://i.resimyukle.xyz/JaCI7S.png)
+![s5](https://i.resimyukle.xyz/M7TQ3L.png)

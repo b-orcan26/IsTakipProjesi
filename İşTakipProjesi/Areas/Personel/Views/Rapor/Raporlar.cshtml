@@ -1,0 +1,87 @@
+﻿@model IEnumerable<DTO.RaporListDTO>
+
+@{
+    ViewData["Title"] = "Raporlar";
+    Layout = "~/Areas/Personel/Views/Shared/_PersonelLayout.cshtml";
+}
+
+<div class="text-center">
+    <h4>Raporlarım</h4>
+    <hr />
+</div>
+<div class="row">
+    <div class="col-md-4">
+        Raporlarim
+        <hr />
+    </div>
+    <div class="col-md-8"><p class="text-center">Seçili Rapor</p><hr /></div>
+    <div class="col-md-4 mt-1" style="overflow-y:scroll; height:500px;">
+        <div class="d-flex flex-column">
+            @foreach (var item in Model)
+            {
+                <div class="card shadow mb-4 d-inline-block">
+                    <div class="card-header py-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <h6 class="m-0 font-weight-bold text-primary">
+                                    <GorevInfo rapor-id="@item.Id"></GorevInfo> adlı görev için @item.YazilmaTarihi.ToString("dd/MM/yyyy") tarihinde yazdığınız rapor<br />
+                                </h6>
+                            </div>
+                            <div class="col-3">
+                                <div class="float-left no-gutters">
+                                    <label class="my-auto mr-2">
+                                        Seç
+                                    </label>
+                                </div>
+                                <div class="d-inline no-gutters">
+                                    <input type="radio" value="@(item.Id)" name="radio" style="margin-top:6px;">
+                                    <span class="checkmark"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            }
+
+
+        </div>
+    </div>
+    <div class="col-md-8">
+        @foreach (var item in Model)
+        {
+        <div id="RaporField@(item.Id)" class="p-4 raporField" style="overflow-y:scroll;">
+            <div style="height:450px; word-break:break-word;">                
+                @Html.Raw(item.Icerik)
+            </div>
+            @if (item.Okundumu == false)
+            {
+                <div class="text-left mt-2">
+                    <p class="text-danger">Rapor okunmamış</p>
+                    <a class="btn btn-warning" asp-controller="Rapor" asp-action="RaporGuncelle" asp-area="Personel" asp-route-id="@item.Id">Raporu Düzenle</a>
+                    <a class="btn btn-danger" asp-controller="Rapor" asp-action="RaporSil" asp-area="Personel" asp-route-id="@item.Id">Sil</a>
+                </div>
+            }
+            else
+            {
+                <div class="text-left mt-2">
+                    <p class="text-success">Rapor okunmuş</p>                    
+                </div>
+            }
+        </div>
+        }
+    </div>
+</div>
+@section Scripts{ 
+        <script type="text/javascript">
+            $(".raporField").hide();
+
+            $('input[type=radio][name=radio]').change(function () {
+                var id = $(this).val();
+                $(".raporField").hide();
+                $("#RaporField" + id).show();
+            });
+        </script>
+}

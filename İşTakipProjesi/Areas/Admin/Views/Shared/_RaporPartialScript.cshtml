@@ -1,0 +1,110 @@
+﻿<script type="text/javascript">
+
+        var listCount =@(Model.Count);
+        var aralik = 10;
+        var bolum = Math.ceil(listCount / aralik);
+
+        console.log("bolum : " + bolum);
+        if (bolum > 1) {
+            var index = 2;
+            for (; index <= bolum; index++) {
+                console.log("index :" + index);
+                $(".page-items-" + (index - 1)).after("<li class='page-item page-item-btn page-items-"+index+ "'><button class=" + "page-link" + " type=" + "button" + ">" + index + "</button></li>");
+        }
+        }
+
+        $(".page-link").click(function () {
+            $(".page-item-btn").removeClass("active");
+            $(this).parent().addClass("active");
+            $(this).parent().blur();
+            var val = $(this).text();
+
+            var startIndex = (val - 1) * 10;
+            var endIndex = val * 10;
+
+            $(".cardDiv").hide();
+            //var divs = $('#accordionExample .cardedDiv');
+            //var cards = divs.toArray();
+            for (; startIndex < endIndex; startIndex++) {
+                $(".cardedDiv" + startIndex).show();
+
+            }
+
+        });
+
+        $(".okunmaBtn").click(function(){
+
+            $("#LoadingElement").show();
+            $("#LoadingElement").LoadingOverlay("show", {
+                background: "rgba(16, 16, 16, 0.5)"
+            });
+            var id = $(this).attr("raporid");
+            AjaxWork(id);
+
+            function AjaxWork(id) {
+
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: "/Admin/Rapor/OkunduOlarakIsaretle/",
+                        data: { id },
+                        async: false,
+                        success: function (data) {
+
+                            var obj = JSON.parse(JSON.stringify(data))
+                            obj.durum = new Boolean(obj.success);
+
+
+                            if (obj.durum == true) {
+
+                                setTimeout(function () {
+
+
+                                    $("#LoadingElement").hide();
+                                    $.toast({
+                                        heading: 'Başarılı',
+                                        text: 'Rapor okundu olarak işaretlendi',
+                                        showHideTransition: 'slide',
+                                        icon: 'success'
+                                    })
+                                }, 2000);
+                                ModifyHtml(id);
+                            }
+                            else {
+                                isSuccess = false;
+                                setTimeout(function () {
+                                    $("#LoadingElement").hide();
+
+                                    $.toast({
+                                        heading: 'Hata',
+                                        text: 'Rapor okundu olarak işaretlenemedi',
+                                        showHideTransition: 'fade',
+                                        icon: 'error'
+                                    })
+                                }, 2000);
+                            }
+                        },
+                        error: function (request, status, error) {
+
+                            $("#LoadingElement").hide();
+                            alert(request.responseText);
+                        }
+                    });
+
+                function ModifyHtml(id) {
+                    setTimeout(function () {
+                        console.log("Modify :" + id);
+                        var elem = $("#okunmaDiv" + id).next();
+                        elem.remove();
+                        $("<div class='" + "text-right'" + "><p class='" + "mr-2 mb-2 okunma'" + "><small class='" + "text-success'" + ">Okundu</small></p ></div >").insertAfter("#okunmaDiv" + id);
+
+                    }, 2000);
+
+                }
+
+            }
+
+
+        });
+
+</script>

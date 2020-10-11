@@ -1,0 +1,359 @@
+﻿@model İşTakipProjesi.Areas.Admin.Models.GorevUsersVM
+
+@{
+    ViewData["Title"] = "PersonelAta";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
+<style>
+    /* FontAwesome for working BootSnippet :> */
+    .loading {
+        background: rgba(0, 0, 0, 0.3);
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 9998;
+    }
+
+    .spinner {
+        background: #000 url(https://code.jquery.com/mobile/1.1.0/images/ajax-loader.gif) 0 0 no-repeat;
+        border: 0;
+        -webkit-border-radius: 36px;
+        -moz-border-radius: 36px;
+        border-radius: 36px;
+        box-shadow: 0 1px 1px -1px #fff;
+        display: block;
+        height: 46px;
+        left: 50%;
+        margin: -23px 0 0 -23px;
+        opacity: 0.18;
+        overflow: hidden;
+        padding: 1px;
+        position: fixed;
+        text-align: center;
+        top: 50%;
+        width: 46px;
+        z-index: 9999;
+    }
+
+
+    #team {
+        background: #eee !important;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: #108d6f;
+        border-color: #108d6f;
+        box-shadow: none;
+        outline: none;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #007b5e;
+        border-color: #007b5e;
+    }
+
+    section {
+        padding: 60px 0;
+    }
+
+        section .section-title {
+            text-align: center;
+            color: #007b5e;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+        }
+
+    #team .card {
+        border: none;
+        background: #ffffff;
+    }
+
+    .image-flip:hover .backside,
+    .image-flip.hover .backside {
+        -webkit-transform: rotateY(0deg);
+        -moz-transform: rotateY(0deg);
+        -o-transform: rotateY(0deg);
+        -ms-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+        border-radius: .25rem;
+    }
+
+    .image-flip:hover .frontside,
+    .image-flip.hover .frontside {
+        -webkit-transform: rotateY(180deg);
+        -moz-transform: rotateY(180deg);
+        -o-transform: rotateY(180deg);
+        transform: rotateY(180deg);
+    }
+
+    .mainflip {
+        -webkit-transition: 1s;
+        -webkit-transform-style: preserve-3d;
+        -ms-transition: 1s;
+        -moz-transition: 1s;
+        -moz-transform: perspective(1000px);
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        transition: 1s;
+        transform-style: preserve-3d;
+        position: relative;
+    }
+
+    .frontside {
+        position: relative;
+        -webkit-transform: rotateY(0deg);
+        -ms-transform: rotateY(0deg);
+        z-index: 2;
+        margin-bottom: 30px;
+    }
+
+    .backside {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: white;
+        -webkit-transform: rotateY(-180deg);
+        -moz-transform: rotateY(-180deg);
+        -o-transform: rotateY(-180deg);
+        -ms-transform: rotateY(-180deg);
+        transform: rotateY(-180deg);
+        -webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+        -moz-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+        box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+    }
+
+    .frontside,
+    .backside {
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transition: 1s;
+        -webkit-transform-style: preserve-3d;
+        -moz-transition: 1s;
+        -moz-transform-style: preserve-3d;
+        -o-transition: 1s;
+        -o-transform-style: preserve-3d;
+        -ms-transition: 1s;
+        -ms-transform-style: preserve-3d;
+        transition: 1s;
+        transform-style: preserve-3d;
+    }
+
+        .frontside .card,
+        .backside .card {
+            min-height: 150px;
+            width: 250px !important;
+        }
+
+            .backside .card a {
+                font-size: 18px;
+                color: #007b5e !important;
+            }
+
+            .frontside .card .card-title,
+            .backside .card .card-title {
+                color: #007b5e !important;
+            }
+
+            .frontside .card .card-body img {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+            }
+</style>
+
+<div class="loading" style="display: none;">
+    <div class="spinner"></div>
+    <div id="alerts" class="text-center"></div>
+</div>
+<div class="loading" id="LoadingElement" style="display: none;">
+</div>
+<div class="text-center">
+    <h4 style="color: #858796;">Personel Ata</h4>
+    <hr />
+</div>
+
+<div class="text-center">
+    <div class="card shadow mb-4 d-inline-block">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">@Model.gorev.Tanim</h6>
+        </div>
+
+        <div class="card-body">
+            @Model.gorev.Aciklama
+        </div>
+    </div>
+</div>
+
+
+
+
+<section id="team" class=" py-0">
+    <div class="container">
+        <h5 class="section-title mb-2 h4 pt-5"><b>Personeller</b></h5>
+
+
+        <div class="row">
+            <!-- Team member -->
+            @foreach (var item in Model.users)
+            {
+                <div class="col-xs-12 col-sm-6 col-md-3 ">
+                    <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+                        <div class="mainflip">
+                            <div class="frontside">
+                                <div class="card text-center">
+                                    <div class="card-body d-inline-block">
+                                        @if (item.ResimUrl != null)
+                                        {
+                                            <p><img class=" img-fluid" src="~/img/@(item.ResimUrl)" alt="card image"></p>
+                                        }
+                                        else
+                                        {
+                                            <p><img class=" img-fluid" src="~/img/person.png" alt="card image"></p>
+                                        }
+
+                                        <h4 class="card-title" id="user@(item.Id)">@(item.Ad+" "+item.Soyad)</h4>
+                                        @*<p class="card-text">This is basic card with image on top, title, description and button.</p>*@
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="backside">
+                                <div class="card">
+                                    <div class="card-body text-center mt-4">
+                                        <h4 class="card-title">@(item.Ad+" "+item.Soyad)</h4>
+                                        <p class="card-text">
+                                            Tamamladığı Görevler : <completedgorevcounttaghelper user-id="item.Id"></completedgorevcounttaghelper> <br />
+                                            Devam Eden Görevler :  <uncompletedgorevcounttaghelper user-id="item.Id"></uncompletedgorevcounttaghelper> <br />
+                                            Yazdığı Rapor Sayısı : <raporcounttaghelper user-id="item.Id"></raporcounttaghelper>
+                                        </p>
+                                        <button class="btn text-white bg-gradient-danger btn-sm gorevAta" id="@(item.Id)">Görevi Ata</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- ./Team member -->
+
+        </div>
+
+
+
+    </div>
+</section>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Uyarı</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalText"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="Ata">Ata</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="Kapat">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="alert alert-info fade in" id="bsalert">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Info!</strong> This alert box could indicate a neutral informative or action
+</div>
+<div class="loading" id="LoadingElement" style="display: none;"></div>
+<!-- Team -->
+@section Scripts{
+    <script src="~/jquery-toast-plugin/jquery.toast.min.js"></script>
+    <script src="~/jquery-loading-overlay/loadingoverlay.min.js"></script>
+    <script type="text/javascript">
+        $(".gorevAta").click(function () {
+
+            var gorevId = @(Model.gorev.Id);
+            console.log("gorev id:" + gorevId);
+            var userId = this.id;
+            console.log("user id:" + userId);
+            var userName = $('#user' + userId).text();
+            console.log("username :" + userName);
+            $("#modalText").text("Görevi " + userName + " adlı personele atamak istediğinize emin misiniz?");
+            $('#myModal').show();
+
+            $("#Ata").click(function () {
+                $('#myModal').hide();
+                $(".loading").toggle();
+
+                //$("#LoadingElement").show();
+                //$("#LoadingElement").LoadingOverlay("show", {
+                //    background: "rgba(16, 16, 16, 0.5)"
+                //});
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "{area=Admin,action=PersonelAta,controller=Gorev}",
+                        data: { gorevId, userId },
+                        success: function (data) {
+                            console.log(data);
+                            var obj = JSON.parse(JSON.stringify(data))
+                            obj.durum = new Boolean(obj.success);
+
+                            if (obj.durum == true) {
+
+                                $("#alerts").append("<div class='alert alert-success'>" +
+                                    "<strong>Atama Başarılı !</strong></div >");
+                                setTimeout(function () {
+                                    
+                                    
+                                    $(".loading").hide();
+                                    
+                                    window.location.href = "/Admin/Gorev/Gorevler";
+                                }, 5000);
+                            }
+                            else {
+                                $("#alerts").append("<div class='alert alert-danger'>" +
+                                    "<strong>Atama Başarısız !</strong></div >");
+                                
+                                setTimeout(function () {
+                                    
+                                    
+                                    $(".loading").hide();
+                                }, 5000);
+                            }
+
+                            setTimeout(function () {
+                                $(".loading").hide();
+                                //$("#LoadingElement").hide();
+                            }, 2000);
+
+                        }
+                    });
+            });
+
+            $("#Kapat").click(function () {
+                $('#myModal').hide();
+            });
+
+           
+
+        });
+        function ModifyHtml() {
+            setTimeout(function () {
+
+            }, 2000);
+        }
+    </script>
+
+}

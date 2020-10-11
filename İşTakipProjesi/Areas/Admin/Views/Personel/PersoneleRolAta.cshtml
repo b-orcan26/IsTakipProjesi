@@ -1,0 +1,118 @@
+﻿@using Entities
+@model IEnumerable<Entities.UserListWithRoles>
+
+@{
+    ViewData["Title"] = "PersoneleRolAta";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="text-center">
+    <h4>Personele Rol Ata</h4>
+    <hr />
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Soyad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KullaniciAdi)
+            </th>
+            <th>
+                Roller
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Soyad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KullaniciAdi)
+            </td>
+            <td>
+                @{ 
+                    string str = "";
+                    foreach(var rol in item.Roles)
+                    {
+                        str += rol.RolAdi + " ";
+                    }
+
+                }
+                @str
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger rolAtaBtn" user-id="@(item.Id)" data-toggle="modal" data-target="#exampleModal@(item.Id)">Rol Ata/Değiştir</button>
+                <div class="modal fade" id="exampleModal@(item.Id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">@(item.Ad) @(item.Soyad)</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center">
+                                    <p>Roller</p>
+                                    <hr />
+                                </div>
+                                <form asp-action="PersonelRolDegistir" asp-controller="Personel" asp-area="Admin" method="post">
+                                    @{
+                                        List<Entities.Role> liste = ViewBag.Roller;
+
+                                        for (int i = 0; i < liste.Count; i++)
+                                        {
+                                            
+                                            bool exists = item.Roles.Any(y => y.Id == liste[i].Id);
+
+                                            <div class="form-check form-check-inline">
+                                                <input name="[@i].RoleId" type="hidden" value="@liste[i].Id" />
+                                                <input name="[@i].UserId" type="hidden" value="@item.Id" />
+                                                <label class="form-check-label">@liste[i].RolAdi</label>
+                                                <input type="checkbox" name="[@i].Exists" class="form-check-inpu ml-2" asp-for="@exists" />
+                                            </div>
+                                        }
+                                    }
+                                    <div class="text-right">
+                                        <input type="submit" class="btn btn-info" value="Kaydet" />
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer text-center">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Kapat</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+
+
+@section Scripts{ 
+   <script type="text/javascript">
+       $(".rolAtaBtn").click(function () {
+
+           var userid = $(this).attr("user-id");
+           console.log("user id : " + userid);
+
+           $("#exampleModal").show();
+
+       });
+   </script>
+}

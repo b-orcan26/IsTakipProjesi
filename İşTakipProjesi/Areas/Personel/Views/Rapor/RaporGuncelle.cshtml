@@ -1,0 +1,43 @@
+﻿@model DTO.RaporUpdateDTO
+
+@{
+    ViewData["Title"] = "RaporGuncelle";
+    Layout = "~/Areas/Personel/Views/Shared/_PersonelLayout.cshtml";
+}
+
+<script src="~/ckeditor/ckeditor.js"></script>
+
+
+<script type="text/javascript">
+    CKEDITOR.replace('editor')
+</script>
+
+<div class="text-center">
+    <h4>Rapor Guncelle</h4>
+    <hr />
+</div>
+
+
+<div class="row">
+    <div class="col-8 mx-auto">
+        <form asp-action="RaporGuncelle" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="Id" type="hidden" class="form-control" />
+            </div>
+            <div class="form-group">
+                
+                <textarea asp-for="Icerik" class="ckeditor">@Html.Raw(Model.Icerik)</textarea>
+                <span asp-validation-for="Icerik" class="text-danger"></span>
+            </div>
+
+            <input asp-for="YazilmaTarihi" type="hidden" class="form-control" value="@Model.YazilmaTarihi" />
+
+            <div class="form-group">
+                <input type="submit" value="Kaydet" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+

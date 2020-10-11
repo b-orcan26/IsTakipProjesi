@@ -1,0 +1,139 @@
+﻿@model IEnumerable<DTO.RaporListDTO>
+
+@{
+    ViewData["Title"] = "Raporlar";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link href="~/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
+<style>
+    .loading {
+        background: rgba(0, 0, 0, 0.3);
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 9998;
+    }
+</style>
+<div class="loading" id="LoadingElement" style="display: none;">
+</div>
+<div class="text-center">
+    <h4>Raporlar</h4>
+    <hr />
+</div>
+<div class="row align-items-stretch">
+    @foreach (var item in Model)
+    {
+        <div class="card border-dark border-bottom-dark mb-3  col-4 mx-2" style="max-width: 18rem;">
+            <div class="card-header  text-right"><small class="text-muted"> Tarih : @(item.YazilmaTarihi.ToString("MM/dd/yyyy HH:mm:ss"))</small></div>
+            <div class="card-body">
+
+                <p class="card-text">@Html.Raw(item.Icerik)</p>
+            </div>
+            <div class="card-footer text-right">
+                @if (item.Okundumu == true)
+                {
+                    <p>Okundu</p>
+                }
+                else
+                {
+                    <button type="button" id="@(item.Id)" class="btn btn-danger d-block checkedBtn">Okundu Olarak İşaretle</button>
+                }
+            </div>
+        </div>
+
+
+    }
+</div>
+
+
+
+
+@section Scripts{
+    <script src="~/jquery-toast-plugin/jquery.toast.min.js"></script>
+    <script src="~/jquery-loading-overlay/loadingoverlay.min.js"></script>
+    <script type="text/javascript">
+        $(".checkedBtn").click(function () {
+
+
+            $("#LoadingElement").show();
+            $("#LoadingElement").LoadingOverlay("show", {
+                background: "rgba(16, 16, 16, 0.5)"
+            });
+            var id = this.id;
+            var isSuccess = AjaxWork(id);
+            console.log("ajax return :" + isSuccess);
+
+            function AjaxWork(id) {
+                var isSuccess = false;
+
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: "/Admin/Rapor/OkunduOlarakIsaretle/",
+                        data: { id },
+                        async: false,
+                        success: function (data) {
+
+                            var obj = JSON.parse(JSON.stringify(data))
+                            obj.durum = new Boolean(obj.success);
+
+
+                            if (obj.durum == true) {
+
+                                setTimeout(function () {
+                                    //var parent = $(".checkedBtn#" + id).parent();
+                                    //parent.append("<p>Okundu</p>");
+
+                                    $("#LoadingElement").hide();
+                                    $.toast({
+                                        heading: 'Başarılı',
+                                        text: 'Rapor okundu olarak işaretlendi',
+                                        showHideTransition: 'slide',
+                                        icon: 'success'
+                                    })
+                                }, 2000);
+                                ModifyHtml();
+                            }
+                            else {
+                                isSuccess = false;
+                                setTimeout(function () {
+                                    $("#LoadingElement").hide();
+
+                                    $.toast({
+                                        heading: 'Hata',
+                                        text: 'Rapor okundu olarak işaretlenemedi',
+                                        showHideTransition: 'fade',
+                                        icon: 'error'
+                                    })
+                                }, 2000);
+                            }
+                        },
+                        error: function (request, status, error) {
+
+                            $("#LoadingElement").hide();
+                            alert(request.responseText);
+                        }
+                    });
+
+            }
+
+            function ModifyHtml() {
+                setTimeout(function () {
+                    var parent = $(".checkedBtn#" + id).parent();
+                    parent.append("<p>Okundu</p>");
+                    $(".checkedBtn#" + id).remove();
+                }, 2000);
+
+            }
+
+
+
+
+
+        });
+    </script>
+
+}

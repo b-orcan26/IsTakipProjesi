@@ -1,0 +1,103 @@
+﻿@model List<DTO.GorevListDTO>
+@{
+    ViewData["Title"] = "RaporEkle";
+    Layout = "~/Areas/Personel/Views/Shared/_PersonelLayout.cshtml";
+}
+
+<script src="~/ckeditor/ckeditor.js"></script>
+
+
+<script type="text/javascript">
+    CKEDITOR.replace('editor')
+</script>
+
+<div class="text-center">
+    <h4>Rapor Ekle</h4>
+    <small class="pt-5 text-info"><b>Görev seçerek rapor yazabilirsiniz</b></small>
+    <hr />
+</div>
+
+<div class="row">
+    <div class="col-md-4"><h6 class="text-center">Devam Eden Görevlerim</h6><hr /></div>
+    <div class="col-md-8">
+        <h6 class="text-center mx-auto">Rapor Alanı</h6>
+        <hr />
+    </div>
+    <div class="col-md-4 mt-1" style="overflow-y:scroll; height:500px;">
+        
+        
+        <div class="d-flex flex-column">
+            @foreach (var item in Model)
+            {
+                <div class="card shadow mb-4 d-inline-block">
+                    <div class="card-header py-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <h6 class="m-0 font-weight-bold text-primary">@item.Tanim</h6>
+                            </div>
+                            <div class="col-3">
+                                <div class="float-left no-gutters">
+                                    <label class="my-auto mr-2">
+                                        Seç
+                                    </label>
+                                </div>
+                                <div class="d-inline no-gutters">
+                                    <input type="radio" value="@(item.Id)" name="radio" style="margin-top:6px;">
+                                    <span class="checkmark"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+                        @item.Aciklama
+                    </div>
+                </div>
+                
+
+            }
+
+
+        </div>
+    </div>
+    <div class="col-md-8">
+
+        <form id="raporForm" asp-controller="Rapor" asp-action="RaporEkle" asp-area="Personel" method="post">
+            <textarea name="Icerik" class="ckeditor" id="RaporIcerik"></textarea>
+            <input id="GorevIdField" name="GorevId" type="hidden" value="0" />
+            <div class="d-flex flex-fill justify-content-center">
+                <button class="btn btn-info mt-2" type="button" id="SaveBtn" >Kaydet</button>
+            </div>
+            
+        </form>
+        
+    </div>
+</div>
+<div id="pageMessages"></div>
+    @section Scripts{
+
+        <script type="text/javascript">
+
+            $("#SaveBtn").click(function () {
+                var value = $('input[type=radio]:checked').val();
+                if (value == null) {
+                    // görev seçmesi için uyarı atalım
+                    alert("Rapor eklemek için bir görev seçmelisiniz");
+
+                    $(this).blur();
+                }
+                else {
+                    $("#raporForm #GorevIdField").val(value);
+                    $("#raporForm").submit();
+                    $(this).blur();
+                }
+            });
+
+
+            $("#raporForm #GorevIdField").val();
+        </script>
+
+
+
+    }

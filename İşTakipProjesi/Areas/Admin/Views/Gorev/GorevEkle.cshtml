@@ -1,0 +1,34 @@
+﻿@model DTO.GorevEkleDTO
+
+@{
+    ViewData["Title"] = "GorevEkle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="text-center">
+<h4>Görev Ekle</h4>
+<hr />
+</div>
+<div class="row">
+    <div class="col-md-4 mx-auto">
+        <form asp-action="GorevEkle" asp-controller="Gorev" asp-area="Admin">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Tanim" class="control-label"></label>
+                <input asp-for="Tanim" class="form-control" />
+                <span asp-validation-for="Tanim" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Aciklama" class="control-label"></label>
+                <input asp-for="Aciklama" class="form-control" />
+                <span asp-validation-for="Aciklama" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+

@@ -1,0 +1,109 @@
+﻿@model List<Entities.Rapor>
+
+
+<div class="accordion" id="accordionExample">
+
+
+    @for (int i = 0; i < Model.Count; i++)
+    {
+
+        <div class="card cardedDiv@(i) cardDiv">
+            <div class="card-header" id="heading@(Model[i].Id)">
+                <div class="mb-0">
+                    <div class="text-left float-left">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse@(Model[i].Id)" aria-expanded="true" aria-controls="collapseOne">
+                             @(Model[i].Gorev.Tanim) isimli görev için yazılmış rapor
+                        </button>
+                    </div>
+                    <div class="text-right"><small class="text-muted" style="font-size:12px!important;">Yazan : @Model[i].Gorev.User.Ad @Model[i].Gorev.User.Soyad Tarih : @Model[i].YazilmaTarihi</small></div>
+                </div>
+            </div>
+
+            <div id="collapse@(Model[i].Id)" class="collapse" aria-labelledby="heading@(Model[i].Id)" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6 pb-4">
+                            <div class="h-100" id="okunmaDiv@(Model[i].Id)" style="word-break: break-word;">
+                                @Html.Raw(Model[i].Icerik)
+                            </div>
+                            @if (Model[i].Okundumu)
+                            {
+                                <div class=" text-right mb-4">
+                                    <p class=" mr-2 mb-2 okunma"><small class="text-success">Okundu</small></p>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-center mb-4">
+                                    <button class="btn btn-sm btn-danger okunmaBtn pb-4" raporid="@(Model[i].Id)" type="button">Okundu olarak işaretle</button>
+                                </div>
+
+                            }
+
+
+                        </div>
+                        <div class="col-3">
+                            <div class="card border-left-primary shadow  py-2">
+                                <div class="card-header">
+                                    Yazan : @Model[i].Gorev.User.Ad @Model[i].Gorev.User.Soyad
+                                </div>
+                                @if (Model[i].Gorev.User.ResimUrl != null)
+                                {
+                                    <div class="card-body text-center">
+                                        <img src="~/img/@Model[i].Gorev.User.ResimUrl" style="width:50px;height:50px;" class="rounded" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="card-body text-center">
+                                        <img src="~/img/personFemale.jpg" style="width:50px;height:50px;" class="rounded" />
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="card border-left-primary shadow  py-2">
+                                <div class="card-header">
+                                    Görev
+                                </div>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">@Model[i].Gorev.Tanim</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model[i].Gorev.Aciklama</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+<div class="text-right mt-4">
+    <ul class="pagination ml-auto ">
+        <li class="page-item  item-left " hidden>
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item page-item-btn page-items-1 active"><button class="page-link" type="button">1</button></li>
+        @*<li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>*@
+    </ul>
+
+</div>
+

@@ -1,0 +1,140 @@
+﻿@model IEnumerable<DTO.GorevListDTO>
+
+@{
+    ViewData["Title"] = "Gorevler";
+    Layout = "~/Areas/Personel/Views/Shared/_PersonelLayout.cshtml";
+}
+
+<style>
+    page-item active:hover {
+        outline: none !important;
+    }
+
+    paginate_button {
+        outline: none !important;
+    }
+</style>
+
+<div class="text-center">
+    <h4>Görevlerim</h4>
+    <hr />
+</div>
+
+<div class="container">
+    <table class="table" id="myTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tanim)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Aciklama)
+                </th>
+                <th>
+                    Yazdığım Raporlar
+                </th>
+                <th>
+                    Durum
+                </th>
+                <th class="text-center">
+                    İşlemler
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tanim)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Aciklama)
+                    </td>
+                    <td>
+                        @if (item.Rapors.Count > 0)
+                        {
+                            <div class="row">
+                                <div class="col-6 text-right">
+                                    @item.Rapors.Count
+                                </div>
+                                <div class="col-6 text-left">
+                                    <a asp-action="GorevRaporlari" asp-controller="Rapor" asp-area="Personel" asp-route-id="@(item.Id)" data-toggle="tooltip" data-placement="top" title="Raporlara Bak"><span><i class="fas fa-eye text-warning"></i> </span> </a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-6 text-right">
+                                    <p>0</p>
+                                </div>
+                                <div class="col-6">
+
+                                </div>
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @if (item.Durum == true)
+                        {
+                            <small class="text-success">Görev Tamamlandı</small>
+                        }
+                        else
+                        {
+                            <small class="text-warning">Görev Devam Ediyor</small>
+                        }
+                    </td>
+                    <td class="text-center">
+                        @if (item.Durum == true)
+                        {
+
+                        }
+                        else
+                        {
+                            <a class="btn btn-outline-info" asp-area="Personel" asp-action="RaporEkle" asp-controller="Rapor" asp-route-id="@item.Id">Rapor Ekle</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').dataTable({
+                "info": false,
+                "dom": '<"top"lf>t<"bottom"p><"clear">',
+                "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-6'p><'col-sm-6'i>>"
+            });
+
+        });
+        $('#min, #max').keyup(function () {
+            table.draw();
+        });
+
+
+        $(document).on('draw', '#myTable', function () {
+
+            $(".paginate_button .page-item").css("padding", "0px!important");
+        });
+
+        $('#min, #max').keyup(function () {
+            table.draw();
+        });
+
+        $("#myTable_info").parent().hide();
+
+    </script>
+
+
+    <script src="~/startbootstrap-sb-admin-2-gh-pages/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/startbootstrap-sb-admin-2-gh-pages/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/startbootstrap-sb-admin-2-gh-pages/js/demo/datatables-demo.js"></script>
+}

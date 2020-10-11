@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery-toast-plugin@1.3.2",
+      "destination": "wwwroot/jquery-toast-plugin/"
+    },
+    {
+      "library": "jquery-loading-overlay@2.1.7",
+      "destination": "wwwroot/jquery-loading-overlay/"
+    }
+  ]
+}

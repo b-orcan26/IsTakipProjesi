@@ -1,0 +1,89 @@
+﻿@model List<DTO.UserListDTO>
+@{
+    ViewData["Title"] = "Personeller";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
+<div class="text-center">
+    <h4>Personeller</h4>
+    <hr />
+</div>
+
+
+<div class="container">
+    <table class="table" id="myTable">
+        <thead>
+            <tr>
+                <th>
+                    Ad
+                </th>
+                <th>
+                    Soyad
+                </th>
+                <th>
+                    KullaniciAdi
+                </th>
+                <th>
+                    Tamamlanan Görevler
+                </th>
+                <th>
+                    Devam Eden Görevler
+                </th>
+                <th>
+                    Raporlar
+                </th>
+                <th>
+                    İşlemler
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Ad
+                    </td>
+                    <td>
+                        @item.Soyad
+                    </td>
+                    <td>
+                        @item.KullaniciAdi
+
+                    </td>
+                    <td>
+                        <completedgorevcounttaghelper user-id=@item.Id></completedgorevcounttaghelper>                        
+                    </td>
+                    <td>
+                        <uncompletedgorevcounttaghelper user-id="@item.Id"></uncompletedgorevcounttaghelper>
+                    </td>
+                    <td>
+                        <raporcounttaghelper user-id="@item.Id"></raporcounttaghelper>
+                    </td>
+                    <td>                       
+                        <a class="btn btn-danger" asp-action="PersonelSil" asp-controller="Personel" asp-area="Admin" asp-route-id="@item.Id">Personeli Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').dataTable({});
+        });
+
+        $('#min, #max').keyup(function () {
+            table.draw();
+        });
+
+    </script>
+    <script src="~/startbootstrap-sb-admin-2-gh-pages/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/startbootstrap-sb-admin-2-gh-pages/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/startbootstrap-sb-admin-2-gh-pages/js/demo/datatables-demo.js"></script>
+}

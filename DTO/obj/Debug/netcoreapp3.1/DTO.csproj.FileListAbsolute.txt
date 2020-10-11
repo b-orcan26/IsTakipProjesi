@@ -1,0 +1,12 @@
+C:\Users\Baris\source\YeniSayfa\is takibi dapper\İşTakipProjesi\DTO\bin\Debug\netcoreapp3.1\DTO.deps.json
+C:\Users\Baris\source\YeniSayfa\is takibi dapper\İşTakipProjesi\DTO\bin\Debug\netcoreapp3.1\DTO.dll
+C:\Users\Baris\source\YeniSayfa\is takibi dapper\İşTakipProjesi\DTO\bin\Debug\netcoreapp3.1\DTO.pdb
+C:\Users\Baris\source\YeniSayfa\is takibi dapper\İşTakipProjesi\DTO\bin\Debug\netcoreapp3.1\Entities.dll
+C:\Users\Baris\source\YeniSayfa\is takibi dapper\İşTakipProjesi\DTO\bin\Debug\netcoreapp3.1\Entities.pdb
+C:\Users\Baris\source\YeniSayfa\is takibi dapper\İşTakipProjesi\DTO\obj\Debug\netcoreapp3.1\DTO.csprojAssemblyReference.cache
+C:\Users\Baris\source\YeniSayfa\is takibi dapper\İşTakipProjesi\DTO\obj\Debug\netcoreapp3.1\DTO.AssemblyInfoInputs.cache
+C:\Users\Baris\source\YeniSayfa\is takibi dapper\İşTakipProjesi\DTO\obj\Debug\netcoreapp3.1\DTO.AssemblyInfo.cs
+C:\Users\Baris\source\YeniSayfa\is takibi dapper\İşTakipProjesi\DTO\obj\Debug\netcoreapp3.1\DTO.csproj.CoreCompileInputs.cache
+C:\Users\Baris\source\YeniSayfa\is takibi dapper\İşTakipProjesi\DTO\obj\Debug\netcoreapp3.1\DTO.csproj.CopyComplete
+C:\Users\Baris\source\YeniSayfa\is takibi dapper\İşTakipProjesi\DTO\obj\Debug\netcoreapp3.1\DTO.dll
+C:\Users\Baris\source\YeniSayfa\is takibi dapper\İşTakipProjesi\DTO\obj\Debug\netcoreapp3.1\DTO.pdb

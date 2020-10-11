@@ -1,0 +1,45 @@
+﻿@model List<Entities.Rapor>
+@{
+    ViewData["Title"] = "OkunmamisRaporlar";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Rapor"] = "Okunmamış Raporlar";
+}
+
+<link href="~/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
+<style>
+    .page-item.active .page-link {
+        border-color: none;
+    }
+
+    .page-link:focus {
+        box-shadow: none;
+    }
+
+    .loading {
+        background: rgba(0, 0, 0, 0.3);
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 9998;
+    }
+</style>
+<div class="loading" id="LoadingElement" style="display: none;">
+</div>
+<div class="text-center">
+    <div class="flex-grow-1 text-center ">
+        <h4>@ViewData["Rapor"]</h4>
+        <hr />
+    </div>
+</div>
+
+<partial name="_RaporPartial" data="@Model" />
+
+
+@section Scripts{
+    <script src="~/jquery-toast-plugin/jquery.toast.min.js"></script>
+    <script src="~/jquery-loading-overlay/loadingoverlay.min.js"></script>
+    @{await Html.RenderPartialAsync("_RaporPartialScript");}
+}
+

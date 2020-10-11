@@ -4,6 +4,8 @@
 
 Kullanılan Teknolojiler : .Net Core MVC , SignaIR , Dapper , AutoMapper , FluentValidation , JQuery , AJAX , Font Awesome , MomentJS , Generic Repository Pattern
 
+# Ekran Görüntüleri
+
 ![s1](https://i.resimyukle.xyz/44fHOU.png)
 ![s2](https://i.resimyukle.xyz/HeBKQL.png)
 ![s3](https://i.resimyukle.xyz/OyeV3z.png)

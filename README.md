@@ -1,6 +1,6 @@
 # İş Takip 
 
- Yöneticilerin personellere görev atayabildiği ve görevin ilerleme durumunu personellerin yazacağı raporlarla takip edebileceği aynı zamanda tüm kullanıcıların çevrimiçi mesajlaşabildikleri web projesidir.
+ Yöneticilerin personellere görev atayabildiği ve görevin ilerleme durumunu personellerin yazacağı raporlarla takip edebileceği aynı zamanda tüm kullanıcıların çevrimiçi , çevrimdışı mesajlaşabildikleri web projesidir.
 
 Kullanılan Teknolojiler : .Net Core MVC , SignaIR , Dapper , AutoMapper , FluentValidation , JQuery , AJAX , Bootstrap , Font Awesome , MomentJS , Generic Repository Pattern
 
